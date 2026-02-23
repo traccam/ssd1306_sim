@@ -349,6 +349,7 @@ dependencies = [
  "embedded-graphics",
  "embedded-graphics-simulator",
  "heapless",
+ "traccam_common",
 ]
 
 [[package]]
@@ -372,6 +373,16 @@ dependencies = [
  "proc-macro2",
  "quote",
  "unicode-ident",
+]
+
+[[package]]
+name = "traccam_common"
+version = "0.1.0"
+source = "git+https://github.com/traccam/common.git#f6217ac6aca10fa06897665f6c61f8e228564f83"
+dependencies = [
+ "chrono",
+ "embedded-graphics",
+ "heapless",
 ]
 
 [[package]]
