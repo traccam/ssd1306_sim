@@ -1,26 +1,29 @@
-use chrono::NaiveTime;
 use embedded_graphics::{
     pixelcolor::BinaryColor,
     prelude::*,
-    primitives::{Circle, Line, Rectangle, PrimitiveStyle},
-    mono_font::{ascii::FONT_6X9, MonoTextStyle},
-    text::Text,
 };
-use embedded_graphics::mono_font::ascii::FONT_6X10;
-use embedded_graphics::mono_font::MonoTextStyleBuilder;
-use embedded_graphics::text::Baseline;
-use embedded_graphics_simulator::{BinaryColorTheme, SimulatorDisplay, Window, OutputSettingsBuilder};
-use traccam_common::display::DisplayState;
+use embedded_graphics_simulator::{
+    BinaryColorTheme, OutputSettingsBuilder, SimulatorDisplay, SimulatorEvent, Window,
+};
+use std::thread::sleep;
+use std::time::Duration;
+use traccam_common::display::simulator::StateSimulator;
 
-fn main() -> Result<(), core::convert::Infallible> {
+fn main() {
     let mut display = SimulatorDisplay::<BinaryColor>::new(Size::new(128, 32));
-
-    traccam_common::display::draw_status_display(&mut display, &DisplayState::default());
 
     let output_settings = OutputSettingsBuilder::new()
         .theme(BinaryColorTheme::OledWhite)
         .build();
-    Window::new("Hello World", &output_settings).show_static(&display);
-
-    Ok(())
+    let mut w = Window::new("SSD1306 Sim", &output_settings);
+    let mut generator = StateSimulator::default();
+    loop {
+        let state = generator.gen_next();
+        traccam_common::display::draw_status_display(&mut display, &state);
+        w.update(&display);
+        sleep(Duration::from_secs(1));
+        if w.events().find(|&e| e == SimulatorEvent::Quit).is_some() {
+            break;
+        }
+    }
 }
