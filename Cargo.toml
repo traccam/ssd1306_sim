@@ -9,3 +9,4 @@ embedded-graphics = "0.8.2"
 embedded-graphics-simulator = "0.8.0"
 heapless = "0.9.2"
 traccam_common = { git = "https://github.com/traccam/common.git", version = "0.1.0", features = ["simulated_data"] }
+#traccam_common = { path = "../traccam_common", version = "0.1.0", features = ["simulated_data"] }

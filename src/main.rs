@@ -1,7 +1,4 @@
-use embedded_graphics::{
-    pixelcolor::BinaryColor,
-    prelude::*,
-};
+use embedded_graphics::{pixelcolor::BinaryColor, prelude::*};
 use embedded_graphics_simulator::{
     BinaryColorTheme, OutputSettingsBuilder, SimulatorDisplay, SimulatorEvent, Window,
 };
@@ -14,6 +11,7 @@ fn main() {
 
     let output_settings = OutputSettingsBuilder::new()
         .theme(BinaryColorTheme::OledWhite)
+        .scale(6)
         .build();
     let mut w = Window::new("SSD1306 Sim", &output_settings);
     let mut generator = StateSimulator::default();
